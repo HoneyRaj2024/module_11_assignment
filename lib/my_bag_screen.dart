@@ -43,54 +43,126 @@ class _MyBagScreenState extends State<MyBagScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: MyBagListView(updateTotal: updateTotal, updateItemCount: _updateItemCount),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Total Amount:",
-                      style: TextStyle(fontSize: 20, color: Colors.grey),
-                    ),
-                    Text(
-                      "$total\$",
-                      style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 10),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50.0),
-                color: Colors.red,
-              ),
-              child: TextButton(
-                onPressed: () {
-                  showCheckoutDialog(context, itemCounts.reduce((a, b) => a + b));
-                },
-                child: const Text(
-                  "CHECK OUT",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ],
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.portrait) {
+            return _buildPortraitLayout();
+          } else {
+            return _buildLandscapeLayout();
+          }
+        },
       ),
+    );
+  }
+
+  Widget _buildPortraitLayout() {
+    return Column(
+      children: [
+        Expanded(
+          child: MyBagListView(updateTotal: updateTotal, updateItemCount: _updateItemCount),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.zero,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Total Amount:",
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  ),
+                  Text(
+                    "$total\$",
+                    style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 10),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.0),
+              color: Colors.red,
+            ),
+            child: TextButton(
+              onPressed: () {
+                showCheckoutDialog(context, itemCounts.reduce((a, b) => a + b));
+              },
+              child: const Text(
+                "CHECK OUT",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLandscapeLayout() {
+    return Row(
+      children: [
+        Expanded(
+          child: MyBagListView(updateTotal: updateTotal, updateItemCount: _updateItemCount),
+        ),
+        const SizedBox(width: 20),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Total Amount:",
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      ),
+                      SizedBox(width: 100,),
+                      const SizedBox(width: 50,),
+                      Text(
+                        "$total\$",
+                        style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 10),
+              child: Container(
+                width: 350,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50.0),
+                  color: Colors.red,
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    showCheckoutDialog(context, itemCounts.reduce((a, b) => a + b));
+                  },
+                  child: const Text(
+                    "CHECK OUT",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -106,10 +178,10 @@ class _MyBagScreenState extends State<MyBagScreen> {
             ),
             content: Container(
               padding: const EdgeInsets.all(10.0),
-              child: Text(
+              child: const Text(
                 "You have not added any items yet!",
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.black, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
             actions: <Widget>[
