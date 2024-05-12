@@ -110,54 +110,94 @@ class _MyBagScreenState extends State<MyBagScreen> {
   }
 
   void showCheckoutDialog(BuildContext context, int totalItems) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          content: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Congratulations!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "You have added \n $totalItems items \n on your bag!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ],
+    if (totalItems == 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-          ),
-          actions: <Widget>[
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
-                child: const Text(
-                  'OKAY',
-                  style: TextStyle(color: Colors.white),
-                ),
+            content: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "You have not added any items yet!",
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
-          ],
-        );
-      },
-    );
+            actions: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  child: const Text(
+                    'OKAY',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            content: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "Congratulations!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "You have added \n $totalItems items \n on your bag!",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  child: const Text(
+                    'OKAY',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
+
 }
 
 class MyBagListView extends StatelessWidget {
